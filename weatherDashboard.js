@@ -3,20 +3,80 @@ var cityInputEl = document.querySelector("#cityname");
 var buttonEl = document.querySelector("#searchButton");
 var WeatherContainerEl = document.querySelector(".container-CurrentWeather");
 var fiveDayForecastEl = document.querySelector(".container-fivedayForecast");
-var SearchCity = [];
-var cityName;
+var buttonContainer= document.querySelector(".searchHistory-buttons");
+var searchCityList= document.querySelector("#searchCity-list");
+var cityName= [];
+
+// The following function renders items in cityname as buttons
+function renderstoredcityName() {
+    
+    searchCityList.innerHTML = "";
+    
+  console.log("this is cityname:" + cityName)
+     for (var i = 0; i < cityName.length; i++) {
+       var cityHistory = cityName[i];
+       var li = document.createElement("li");
+       //li.textContent = cityHistory;
+       li.setAttribute("data-index", i)
+   
+       var button = document.createElement("button");
+       button.textContent = cityHistory;
+       button.setAttribute("class", "btnlocalstorage");
+       
+       li.appendChild(button);
+       searchCityList.appendChild(li);
+       
+   
+       
+     }
+   }
+
+   
+
+// This function is being called below and will run when the page loads.
+function init() {
+    // Get stored searchCity from localStorage
+    var storedcityName = JSON.parse(localStorage.getItem("cityName"));
+  console.log("this is storedcityName:" +storedcityName)
+    // If cityName were retrieved from localStorage, update the storedcityName array to it
+    if (storedcityName !== null) {
+        cityName = storedcityName;
+    }
+  
+    // This is a helper function that will render cityNames to the DOM
+    renderstoredcityName();
+  }
+
+  function storecityName() {
+    // Stringify and set key in localStorage to todos array
+    localStorage.setItem("cityName", JSON.stringify(cityName));
+  }
 
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
-    var cityName = cityInputEl.value.trim();
+    var searchcityName = cityInputEl.value.trim();
 
     console.log("this is the cityname: " + cityName);
 
-    customCurrentWeather(cityName);
+    customCurrentWeather(searchcityName);
+
+    // Return from function early if submitted todoText is blank
+  if (searchcityName === "") {
+    return;
+  }
+
+  // Add new todoText to todos array, clear the input
+  cityName.push(searchcityName);
+  cityInputEl.value = "";
+
+  // Store updated todos in localStorage, re-render the list
+  storecityName();
+  renderstoredcityName();
 };
 
 
+  
 
 var customCurrentWeather = function (city) {
 
@@ -56,6 +116,16 @@ var customCurrentWeather = function (city) {
 
 var displayWeather = function (currentWeatherData, FiveDayforecastData, currentCity) {
     console.log(currentWeatherData.name)
+
+    var currentTemp = FiveDayforecastData.current.temp;
+    console.log(currentTemp);
+    var currentWindSpeed = FiveDayforecastData.current.wind_speed;
+    console.log(currentWindSpeed);
+    var currentHumidity = FiveDayforecastData.current.humidity;
+    console.log(currentHumidity);
+    var currentUVIndex = FiveDayforecastData.current.uvi;
+    console.log(currentUVIndex);
+    var uvindex = document.querySelector(".uvindex");
 
     var unixTimestamp = currentWeatherData.dt;
     const milliseconds = (unixTimestamp * 1000);
@@ -99,15 +169,7 @@ var displayWeather = function (currentWeatherData, FiveDayforecastData, currentC
 
 
 
-    var currentTemp = FiveDayforecastData.current.temp;
-    console.log(currentTemp);
-    var currentWindSpeed = FiveDayforecastData.current.wind_speed;
-    console.log(currentWindSpeed);
-    var currentHumidity = FiveDayforecastData.current.humidity;
-    console.log(currentHumidity);
-    var currentUVIndex = FiveDayforecastData.current.uvi;
-    console.log(currentUVIndex);
-    var uvindex = document.querySelector(".uvindex");
+    
 
 
     WeatherContainerEl.innerHTML = `   
@@ -176,9 +238,11 @@ var displayWeather = function (currentWeatherData, FiveDayforecastData, currentC
 
 
 
+
 formEl.addEventListener('click', formSubmitHandler);
 
-
+// Calls init to retrieve data and render it to the page on load
+init()
 
 
 
