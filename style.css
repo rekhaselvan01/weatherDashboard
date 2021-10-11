@@ -179,19 +179,46 @@ width:100%;
   
 }
 
+.customForecastContainer{
+  display: inline-flex;
+}
 
 
 .card-body {
   padding: 2.5%;
 }
 
-
+.custom{
+  background-color: white;
+  font-size:14px;
+}
 .myCustomClass{
   background-color: lightskyblue;
   font-size: 12px;
   display:inline;
  
  
+}
+
+.customHeader{
+
+  background-color:white;
+  justify-content: left;
+  font-size: 20px;
+}
+
+.uvindexContainer p, span{
+  display: inline;
+}
+
+
+
+.forecastContainer{
+  display: inline;
+}
+
+.container-fivedayForecast{
+  display: inline;
 }
 
 /* FORM */
