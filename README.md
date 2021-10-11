@@ -14,7 +14,6 @@ final screenshot: Was not able to finish the homework but tried my best.
 Features achieved:
 1.Was able to grab data from weatherAPI and display the current weather and five day forecast as well for the same city.
 2.Was able to generate buttons as list from previous search history on page load.
-3. Have not finished implementing button addlistener.
+3. was able to finish implementing button addlistener.
 4. was not able to rerieve the weather icon from api.. was not able to figure it out.
 5. was not able to color code uvi index.
-could have used better time management to implement other features instead of playing with bootstrap.
