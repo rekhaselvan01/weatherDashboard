@@ -31,7 +31,21 @@ function renderstoredcityName() {
      }
    }
 
-   
+   // Add click event to todoList element
+   searchCityList.addEventListener("click", function(event) {
+    var element = event.target;
+  
+    // Checks if element is a button
+    if (element.matches("button") === true) {
+      // Get its data-index value and remove the todo element from the list
+      var buttonText = element.textContent;
+      
+      customCurrentWeather(buttonText)
+      // Store updated todos in localStorage, re-render the list
+      //storeTodos();
+      //renderTodos();
+    }
+  });
 
 // This function is being called below and will run when the page loads.
 function init() {
